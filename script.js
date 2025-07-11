@@ -248,19 +248,19 @@ function playCards() {
 function fightGoblin() {
   update(locations[4]);
   updateEnemy(0);
-  monsterImg.src = "/images/goblin.jpg";
+  monsterImg.src = "images/goblin.jpg";
 }
 
 function fightElemental() {
   update(locations[4]);
   updateEnemy(1);
-  monsterImg.src = "/images/elemental.jpg";
+  monsterImg.src = "images/elemental.jpg";
 }
 
 function fightDragon() {
   update(locations[4]);
   updateEnemy(2);
-  monsterImg.src = "/images/dragon.jpg";
+  monsterImg.src = "images/dragon.jpg";
 }
 
 function updateEnemy(rank) {
