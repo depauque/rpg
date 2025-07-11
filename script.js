@@ -136,7 +136,7 @@ function update(location) {
   monsterHealth = "?";
   monsterGold = "?";
   monsterLevel = "?";
-  monsterImg.src = "/images/blank.jpg";
+  monsterImg.src = "images/blank.jpg";
   monsterNameText.innerText = "???";
   monsterHealthText.innerText = monsterHealth;
   monsterGoldText.innerText = monsterGold;
