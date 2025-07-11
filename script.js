@@ -15,7 +15,7 @@ const button2 = document.querySelector("#button2");
 const button3 = document.querySelector("#button3");
 const gameLog = document.querySelector("#game-log");
 
-const player = "Олег";
+const player = prompt("Введите имя игрока") || "Игрок";
 let isOldWeaponSold = false;
 let currentWeapon = 0;
 let xp = 0;
@@ -136,13 +136,12 @@ function update(location) {
   monsterHealth = "?";
   monsterGold = "?";
   monsterLevel = "?";
-  monsterImg.src = "/images/blank.png";
+  monsterImg.src = "/images/blank.jpg";
   monsterNameText.innerText = "???";
   monsterHealthText.innerText = monsterHealth;
   monsterGoldText.innerText = monsterGold;
   monsterLevelText.innerText = monsterLevel;
-  gameLog.innerText += `
-  ${location.text}`;
+  gameLog.innerText += `\n${location.text}`;
   trimGameLog();
 }
 
@@ -169,8 +168,7 @@ function buyHealth() {
     playerGoldText.innerText = gold;
     playerHPText.innerText = hp;
   } else {
-    gameLog.innerText += `
-    Недостаточно золота.`;
+    gameLog.innerText += `\nНедостаточно золота.`;
   }
   trimGameLog();
 }
@@ -182,15 +180,12 @@ function buyWeapon() {
       currentWeapon++;
       playerGoldText.innerText = gold;
       currentWeaponText.innerText = weapons[currentWeapon].name;
-      gameLog.innerText += `
-      Вы купили ${weapons[currentWeapon].name}.`;
+      gameLog.innerText += `\nВы купили ${weapons[currentWeapon].name}.`;
     } else {
-      gameLog.innerText += `
-      Недостаточно золота.`;
+      gameLog.innerText += `\nНедостаточно золота.`;
     }
   } else {
-    gameLog.innerText += `
-    У вас уже самое мощное оружие.`;
+    gameLog.innerText += `\nУ вас уже самое мощное оружие.`;
     button2.innerText = "Продать оружие" + "\n" + "+25🪙";
     button2.onclick = sellWeapon;
   }
@@ -202,18 +197,16 @@ function sellWeapon() {
     gold += 25;
     playerGoldText.innerText = gold;
     isOldWeaponSold = true;
-    gameLog.innerText += `
-    Вы продали своё старое оружие за 25 золота.`;
+    gameLog.innerText += `\nВы продали своё старое оружие за 25 золота.`;
   } else {
-    gameLog.innerText += `
-    У вас не осталось оружия для продажи.`;
+    gameLog.innerText += `\nУ вас не осталось оружия для продажи.`;
   }
   trimGameLog();
 }
 
 function drinkBeer() {
-  const xpGain = Math.floor(Math.random() * 20);
-  const hpLoss = Math.floor(Math.random() * 20) + 10;
+  const xpGain = Math.floor(Math.random() * 10) + 1;
+  const hpLoss = Math.floor(Math.random() * 10) + 5;
   xp += xpGain;
   hp -= hpLoss;
   playerXPText.innerText = xp;
@@ -224,8 +217,7 @@ function drinkBeer() {
     return;
   }
 
-  gameLog.innerText += `
-  Вы выпили эля и услышали пару историй (+${xpGain} опыта, -${hpLoss} здоровья).`;
+  gameLog.innerText += `\nВы выпили эля и услышали пару занятных историй (+${xpGain} опыта, -${hpLoss} здоровья).`;
   trimGameLog();
 }
 
@@ -233,8 +225,7 @@ function playCards() {
   const points = Math.floor(Math.random() * 16) + 1;
 
   if (points > gold) {
-    gameLog.innerText += `
-    У вас не хватает золота.`;
+    gameLog.innerText += `\nУ вас не хватает золота.`;
     trimGameLog();
     return;
   }
@@ -242,13 +233,11 @@ function playCards() {
   if (Math.random() >= 0.55) {
     gold += points;
     luck++;
-    gameLog.innerText += `
-    Вы выиграли ${points} золота. +1 к удаче`;
+    gameLog.innerText += `\nВы выиграли ${points} золота. +1 к удаче.`;
   } else {
     gold -= points;
     luck--;
-    gameLog.innerText += `
-    Вы проиграли ${points} золота. -1 к удаче`;
+    gameLog.innerText += `\nВы проиграли ${points} золота. -1 к удаче.`;
   }
 
   playerGoldText.innerText = gold;
@@ -259,19 +248,19 @@ function playCards() {
 function fightGoblin() {
   update(locations[4]);
   updateEnemy(0);
-  monsterImg.src = "/images/goblin.png";
+  monsterImg.src = "/images/goblin.jpg";
 }
 
 function fightElemental() {
   update(locations[4]);
   updateEnemy(1);
-  monsterImg.src = "/images/elemental.png";
+  monsterImg.src = "/images/elemental.jpg";
 }
 
 function fightDragon() {
   update(locations[4]);
   updateEnemy(2);
-  monsterImg.src = "/images/dragon.png";
+  monsterImg.src = "/images/dragon.jpg";
 }
 
 function updateEnemy(rank) {
@@ -295,8 +284,7 @@ function attack() {
   monsterHealth -= damage;
   hp -= Math.floor(Math.random() * 8) + monsterLevel;
 
-  gameLog.innerText += `
-  ${monsterNameText.innerText} атакует.`;
+  gameLog.innerText += `\n${monsterNameText.innerText} атакует.`;
   gameLog.innerText += ` Вы наносите ${damage} урона с помощью ${currentWeaponText.innerText}.`;
   trimGameLog();
 
@@ -332,17 +320,18 @@ function calcMonsterDamage() {
 }
 
 function dodge() {
-  if (Math.random() >= 0.55) {
+  if (Math.random() >= (luck > 1 ? 0.45 : 0.55)) {
     const skillPoints = Math.floor(Math.random() * 3) + 1;
     xp += skillPoints;
     playerXPText.innerText = xp;
-    gameLog.innerText += `
-    Вы увернулись от атаки и получили ${skillPoints} опыта.`;
+    gameLog.innerText += `\nВы увернулись от атаки и получили ${skillPoints} опыта.`;
   } else {
     hp -= calcMonsterDamage();
     playerHPText.innerText = hp;
-    gameLog.innerText += `
-    Вы не смогли увернуться от атаки и получили урон.`;
+    gameLog.innerText += `\nВы не смогли увернуться от атаки и получили урон.`;
+  }
+  if (hp <= 0) {
+    lose();
   }
   trimGameLog();
 }

@@ -99,7 +99,6 @@ body {
   width: 30%;
   height: 60px;
   font-size: 18px;
-  transition: transform;
 }
 
 .button:hover {
